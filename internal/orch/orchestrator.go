@@ -7,20 +7,6 @@ import (
 	"sync"
 )
 
-type Provider interface {
-	Call(ctx context.Context, cfg ModelConfig, prompt, code string) (string, error)
-}
-
-var providerRegistry = map[string]Provider{}
-
-func registerProvider(name string, p Provider) {
-	providerRegistry[name] = p
-}
-
-func getProvider(name string) Provider {
-	return providerRegistry[name]
-}
-
 // Non-streaming orchestration: returns a single Response.
 func Run(ctx context.Context, req Request) Response {
 	results := make([]ModelResult, len(req.Models))
