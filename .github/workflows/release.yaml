@@ -5,6 +5,8 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
 env:
   MODULE_PATH: github.com/oorrwullie/orchd
 
